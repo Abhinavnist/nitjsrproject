@@ -21,8 +21,6 @@ function Declaration() {
         I hereby declare that the information given above is true to the best of
         my knowledge.
       </label>
-
-      {/* Submit button */}
     </div>
   )
 }

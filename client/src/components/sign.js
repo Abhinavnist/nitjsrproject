@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./form.css"
+import "./AdmissionForm.css"
 
 function Sign() {
   const [photoPreview, setPhotoPreview] = useState("")

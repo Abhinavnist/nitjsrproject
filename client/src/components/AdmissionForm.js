@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./form.css"
+import "./AdmissionForm.css"
 import Sign from "./sign"
 import DocumentVerification from "./DocumentVerification"
 import AddressForm from "./AddressForm"
@@ -33,22 +33,6 @@ const AdmissionForm = () => {
     sex: "",
     height: "",
     weight: "",
-    /* communicationAddress: {
-      address: "",
-      city: "",
-      phoneNumber: "",
-      mobileNumber: "",
-      nearestBusStation: "",
-      nearestRailwayStation: "",
-    },
-    permanentAddress: {
-      address: "",
-      city: "",
-      phoneNumber: "",
-      mobileNumber: "",
-      nearestBusStation: "",
-      nearestRailwayStation: "",
-    }, */
     ddDetails: [
       {
         transactionIdNo: "",
@@ -67,18 +51,6 @@ const AdmissionForm = () => {
     }))
   }
 
-  /* const handleAddressChange = (e) => {
-    const { name, value } = e.target
-    const addressType = e.target.dataset.addressType
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [addressType]: {
-        ...prevFormData[addressType],
-        [name]: value,
-      },
-    }))
-  } */
-
   const handleDdDetailsChange = (e, index) => {
     const { name, value } = e.target
     const updatedDdDetails = [...formData.ddDetails]
@@ -91,13 +63,6 @@ const AdmissionForm = () => {
       ddDetails: updatedDdDetails,
     }))
   }
-
-  /* const handleAddDdDetails = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      ddDetails: [...prevFormData.ddDetails, {}],
-    }))
-  } */
 
   const handleRemoveDdDetails = (index) => {
     setFormData((prevFormData) => {
@@ -121,23 +86,26 @@ const AdmissionForm = () => {
       className="admission-form"
       onSubmit={handleSubmit}
     >
-      <div className="profile flex justify-center py-4">
-        <img
-          src={Nitjsr}
-          // className={styles.profile_img}
-          alt="avatar"
-        />
+      <div className="container mx-auto">
+        <div className="profile flex flex-col items-center justify-center py-4 md:flex-row md:justify-start">
+          <img
+            src={Nitjsr}
+            // className="w-24 h-24 md:w-32 md:h-32 mr-4"
+            alt="logo"
+          />
 
-        <label className="top-label heading">
-          NATIONAL INSTITUTE OF TECHNOLOGY JAMSHEDPUR , INDIA <br />
-          राष्ट्रीय प्रौद्योगिकी संस्थान जमशेदपुर
-        </label>
+          <label className="top-label heading text-center md:text-left">
+            NATIONAL INSTITUTE OF TECHNOLOGY JAMSHEDPUR, INDIA <br />
+            राष्ट्रीय प्रौद्योगिकी संस्थान जमशेदपुर
+          </label>
+        </div>
+
+        <h2 className="top-label text-center md:text-left">
+          (An Institute of National importance under MHRD, Government of India)
+        </h2>
+        <h2 className="top-label text-center md:text-left">Admission Form</h2>
       </div>
 
-      <h2 className="top-label">
-        (An Institute of National importance under MHRD, Government of India)
-      </h2>
-      <h2>Admission Form</h2>
       <label>
         Full Name (English Capitals):
         <input
@@ -415,131 +383,6 @@ const AdmissionForm = () => {
         />
       </label>
       <AddressForm />
-      {/* <h3>Address for Communication</h3>
-      <label>
-        Address:
-        <input
-          type="text"
-          name="address"
-          data-address-type="communicationAddress"
-          value={formData.communicationAddress.address}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        City:
-        <input
-          type="text"
-          name="city"
-          data-address-type="communicationAddress"
-          value={formData.communicationAddress.city}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Phone No. (Land line):
-        <input
-          type="tel"
-          pattern="[0-9*]"
-          name="phoneNumber"
-          data-address-type="communicationAddress"
-          value={formData.communicationAddress.phoneNumber}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Mobile No.:
-        <input
-          type="tel"
-          pattern="[0-9*]"
-          name="mobileNumber"
-          data-address-type="communicationAddress"
-          value={formData.communicationAddress.mobileNumber}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Nearest Bus Station:
-        <input
-          type="text"
-          name="nearestBusStation"
-          data-address-type="communicationAddress"
-          value={formData.communicationAddress.nearestBusStation}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Nearest Railway Station:
-        <input
-          type="text"
-          name="nearestRailwayStation"
-          data-address-type="communicationAddress"
-          value={formData.communicationAddress.nearestRailwayStation}
-          onChange={handleAddressChange}
-        />
-      </label>
-
-      <h3>Permanent Address</h3>
-      <label>
-        Address:
-        <input
-          type="text"
-          name="address"
-          data-address-type="permanentAddress"
-          value={formData.permanentAddress.address}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        City:
-        <input
-          type="text"
-          name="city"
-          data-address-type="permanentAddress"
-          value={formData.permanentAddress.city}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Phone No. (Land line):
-        <input
-          type="text"
-          name="phoneNumber"
-          data-address-type="permanentAddress"
-          value={formData.permanentAddress.phoneNumber}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Mobile No.:
-        <input
-          type="text"
-          name="mobileNumber"
-          data-address-type="permanentAddress"
-          value={formData.permanentAddress.mobileNumber}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Nearest Bus Station:
-        <input
-          type="text"
-          name="nearestBusStation"
-          data-address-type="permanentAddress"
-          value={formData.permanentAddress.nearestBusStation}
-          onChange={handleAddressChange}
-        />
-      </label>
-      <label>
-        Nearest Railway Station:
-        <input
-          type="text"
-          name="nearestRailwayStation"
-          data-address-type="permanentAddress"
-          value={formData.permanentAddress.nearestRailwayStation}
-          onChange={handleAddressChange}
-        />
-      </label> */}
 
       <h3>Demand Draft Details</h3>
       {formData.ddDetails.map((ddDetail, index) => (
@@ -590,13 +433,8 @@ const AdmissionForm = () => {
           )}
         </div>
       ))}
+
       <Sign />
-      {/* <button
-        type="button"
-        onClick={handleAddDdDetails}
-      >
-        Add DD Details
-      </button> */}
 
       <DocumentVerification />
       <Declaration />
