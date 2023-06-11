@@ -1,8 +1,6 @@
 import mongoose from "mongoose"
 
-const mongoose = require("mongoose")
-
-const AdmissionSchema = new mongoose.Schema({
+const AdmissionFormSchema = new mongoose.Schema({
   fullNameEnglish: {
     type: String,
     uppercase: true,
@@ -189,6 +187,12 @@ const AdmissionSchema = new mongoose.Schema({
       },
     },
   ],
+  declaration: {
+    type: Boolean,
+    required: [true, "You must accept the declaration"],
+  },
 })
 
-module.exports = mongoose.model("Admission", AdmissionSchema)
+const AdmissionForm = mongoose.model("AdmissionForm", AdmissionFormSchema)
+// module.exports = AdmissionForm
+export default AdmissionForm

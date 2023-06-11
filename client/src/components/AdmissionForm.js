@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import axios from "axios"
 import "./AdmissionForm.css"
 import Sign from "./sign"
 import DocumentVerification from "./DocumentVerification"
@@ -75,10 +76,26 @@ const AdmissionForm = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  /* const handleSubmit = (e) => {
     e.preventDefault()
     // Handle form submission logic here
     console.log(formData)
+  } */
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(formData)
+    // Make the POST request using Axios
+    axios
+      .post("http://localhost:8080/api/admissionform", formData)
+      .then((response) => {
+        console.log("Admission form submitted:", response.data)
+        // Optionally, handle the response from the backend and show a success message to the user
+      })
+      .catch((error) => {
+        console.error("Failed to submit admission form:", error)
+        // Optionally, handle the error and show an error message to the user
+      })
   }
 
   return (
@@ -436,7 +453,7 @@ const AdmissionForm = () => {
 
       <Sign />
 
-      <DocumentVerification />
+      {/* <DocumentVerification /> */}
       <Declaration />
       <button type="submit">Submit</button>
     </form>

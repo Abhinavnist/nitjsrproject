@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import ENV from "../config.js"
 import otpGenerator from "otp-generator"
+import AdmissionForm from "../model/Admission.model.js"
 
 // middleware fir verify user
 export async function verifyUser(req, res, next) {
@@ -261,5 +262,46 @@ export async function resetPassword(req, res) {
     }
   } catch (error) {
     return res.status(401).send({ error })
+  }
+}
+
+// Handle POST request to /api/admissionform
+/* export async function submitAdmissionForm(req, res) {
+  try {
+    const formData = req.body // Assuming you are using body-parser or a similar middleware to parse the request body
+
+    // Create a new instance of the AdmissionForm model
+    const admissionForm = new AdmissionForm(formData)
+
+    // Save the form data to the database
+    const savedForm = await admissionForm.save()
+
+    console.log("Admission form saved:", savedForm)
+    res.status(200).json(savedForm) // Optionally, send a response back to the client
+  } catch (error) {
+    console.error("Failed to save admission form:", error)
+    res.status(500).json({ error: "Failed to save admission form" }) // Optionally, send an error response back to the client
+  }
+} */
+export async function submitAdmissionForm(req, res) {
+  try {
+    const formData = req.body
+
+    // Create a new instance of the AdmissionForm model
+    const admissionForm = new AdmissionForm(formData)
+
+    // Save the form data to the database
+    admissionForm.save((err, savedForm) => {
+      if (err) {
+        console.error("Failed to save admission form:", err)
+        res.status(500).json({ error: "Failed to save admission form" })
+      } else {
+        console.log("Admission form saved:", savedForm)
+        res.status(200).json(savedForm)
+      }
+    })
+  } catch (error) {
+    console.error("Failed to save admission form:", error)
+    res.status(500).json({ error: "Failed to save admission form" })
   }
 }
