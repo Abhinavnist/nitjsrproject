@@ -61,7 +61,7 @@ const AdmissionForm = () => {
         bankName: "",
       },
     ],
-    declaration: false,
+    declaration: true,
   })
 
   const handleChange = (e) => {

@@ -105,71 +105,78 @@ const AdmissionFormSchema = new mongoose.Schema({
     type: Number,
   },
   // address field would be defined separately, either as embedded sub-document or a separate model/schema
-
-  residencePincode: {
-    type: String,
-    required: true,
-  },
-  residenceCity: {
-    type: String,
-    required: true,
-  },
-  residenceStreetAddress: {
-    type: String,
-    required: true,
-  },
-  residenceState: {
-    type: String,
-    required: true,
-  },
-  residenceCountry: {
-    type: String,
-    required: true,
-  },
-  residencePhone: {
-    type: String,
-  },
-  residenceMobile: {
-    type: String,
-  },
-  residenceBusStation: {
-    type: String,
-  },
-  residenceRailwayStation: {
-    type: String,
-  },
-  permanentPincode: {
-    type: String,
-    required: true,
-  },
-  permanentCity: {
-    type: String,
-    required: true,
-  },
-  permanentStreetAddress: {
-    type: String,
-    required: true,
-  },
-  permanentState: {
-    type: String,
-    required: true,
-  },
-  permanentCountry: {
-    type: String,
-    required: true,
-  },
-  permanentPhone: {
-    type: String,
-  },
-  permanentMobile: {
-    type: String,
-  },
-  permanentBusStation: {
-    type: String,
-  },
-  permanentRailwayStation: {
-    type: String,
-  },
+  communicationAddress: [
+    {
+      communicationPincode: {
+        type: String,
+        required: true,
+      },
+      communicationCity: {
+        type: String,
+        required: true,
+      },
+      communicationStreetAddress: {
+        type: String,
+        required: true,
+      },
+      communicationState: {
+        type: String,
+        required: true,
+      },
+      communicationCountry: {
+        type: String,
+        required: true,
+      },
+      communicationPhone: {
+        type: String,
+      },
+      communicationMobile: {
+        type: String,
+      },
+      communicationBusStation: {
+        type: String,
+      },
+      communicationRailwayStation: {
+        type: String,
+      },
+    },
+  ],
+  permanentAddress: [
+    {
+      permanentPincode: {
+        type: String,
+        required: true,
+      },
+      permanentCity: {
+        type: String,
+        required: true,
+      },
+      permanentStreetAddress: {
+        type: String,
+        required: true,
+      },
+      permanentState: {
+        type: String,
+        required: true,
+      },
+      permanentCountry: {
+        type: String,
+        required: true,
+      },
+      permanentPhone: {
+        type: String,
+      },
+      permanentMobile: {
+        type: String,
+      },
+      permanentBusStation: {
+        type: String,
+      },
+      permanentRailwayStation: {
+        type: String,
+      },
+    },
+  ],
 
   ddDetails: [
     {
