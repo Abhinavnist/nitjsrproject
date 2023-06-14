@@ -2,9 +2,6 @@ import React, { useState } from "react"
 import axios from "axios"
 import "./AdmissionForm.css"
 import Sign from "./sign"
-import DocumentVerification from "./DocumentVerification"
-import AddressForm from "./AddressForm"
-import Declaration from "./Declaration"
 import Nitjsr from "../assets/logo.png"
 const AdmissionForm = () => {
   const [formData, setFormData] = useState({
@@ -34,6 +31,28 @@ const AdmissionForm = () => {
     sex: "",
     height: "",
     weight: "",
+    communicationAddress: {
+      communicationPincode: "",
+      communicationCity: "",
+      communicationStreetAddress: "",
+      communicationState: "",
+      communicationCountry: "",
+      communicationPhone: "",
+      communicationMobile: "",
+      communicationBusStation: "",
+      communicationRailwayStation: "",
+    },
+    permanentAddress: {
+      permanentPincode: "",
+      permanentCity: "",
+      permanentStreetAddress: "",
+      permanentState: "",
+      permanentCountry: "",
+      permanentPhone: "",
+      permanentMobile: "",
+      permanentBusStation: "",
+      permanentRailwayStation: "",
+    },
     ddDetails: [
       {
         transactionIdNo: "",
@@ -42,6 +61,7 @@ const AdmissionForm = () => {
         bankName: "",
       },
     ],
+    declaration: false,
   })
 
   const handleChange = (e) => {
@@ -74,6 +94,83 @@ const AdmissionForm = () => {
         ddDetails: updatedDdDetails,
       }
     })
+  }
+
+  const handleInputChange = async (event, addressType) => {
+    const { name, value } = event.target
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [addressType]: {
+        ...prevFormData[addressType],
+        [name]: value,
+      },
+    }))
+
+    if (value.length === 6) {
+      await fetchAddressByPincode(value, addressType)
+    }
+  }
+
+  const fetchAddressByPincode = async (pincode, addressType) => {
+    try {
+      const response = await axios.get(
+        `https://api.postalpincode.in/pincode/${pincode}`
+      )
+
+      if (response.data && response.data.length > 0) {
+        const { District, State, Country } = response.data[0].PostOffice[0]
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [addressType]: {
+            ...prevFormData[addressType],
+            [addressType === "communicationAddress"
+              ? "communicationCity"
+              : "permanentCity"]: District,
+            [addressType === "communicationAddress"
+              ? "communicationState"
+              : "permanentState"]: State,
+            [addressType === "communicationAddress"
+              ? "communicationCountry"
+              : "permanentCountry"]: Country,
+          },
+        }))
+      } else {
+        console.log("Invalid pincode or no data found")
+      }
+    } catch (error) {
+      console.error("Error fetching address:", error)
+    }
+  }
+
+  const handleSameAsCommunicationAddress = () => {
+    const {
+      communicationPincode,
+      communicationCity,
+      communicationStreetAddress,
+      communicationState,
+      communicationCountry,
+      communicationPhone,
+      communicationMobile,
+      communicationBusStation,
+      communicationRailwayStation,
+    } = formData.communicationAddress
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      permanentAddress: {
+        ...prevFormData.permanentAddress,
+        permanentPincode: communicationPincode,
+        permanentCity: communicationCity,
+        permanentStreetAddress: communicationStreetAddress,
+        permanentState: communicationState,
+        permanentCountry: communicationCountry,
+        permanentPhone: communicationPhone,
+        permanentMobile: communicationMobile,
+        permanentBusStation: communicationBusStation,
+        permanentRailwayStation: communicationRailwayStation,
+      },
+    }))
   }
 
   /* const handleSubmit = (e) => {
@@ -399,7 +496,183 @@ const AdmissionForm = () => {
           onChange={handleChange}
         />
       </label>
-      <AddressForm />
+
+      <div>
+        <h3>Communication Address</h3>
+        <label htmlFor="communicationPincode">Pincode:</label>
+        <input
+          type="text"
+          id="communicationPincode"
+          name="communicationPincode"
+          value={formData.communicationAddress.communicationPincode}
+          onChange={(e) => handleInputChange(e, "communicationAddress")}
+        />
+
+        <label htmlFor="communicationCity">City:</label>
+        <input
+          type="text"
+          id="communicationCity"
+          name="communicationCity"
+          value={formData.communicationAddress.communicationCity}
+          readOnly
+        />
+
+        <label htmlFor="communicationStreetAddress">Street Address:</label>
+        <input
+          type="text"
+          id="communicationStreetAddress"
+          name="communicationStreetAddress"
+          value={formData.communicationAddress.communicationStreetAddress}
+          onChange={(e) => handleInputChange(e, "communicationAddress")}
+        />
+
+        <label htmlFor="communicationState">State:</label>
+        <input
+          type="text"
+          id="communicationState"
+          name="communicationState"
+          value={formData.communicationAddress.communicationState}
+          readOnly
+        />
+
+        <label htmlFor="communicationCountry">Country:</label>
+        <input
+          type="text"
+          id="communicationCountry"
+          name="communicationCountry"
+          value={formData.communicationAddress.communicationCountry}
+          readOnly
+        />
+
+        <label htmlFor="communicationPhone">Phone No. (Land line):</label>
+        <input
+          type="tel"
+          id="communicationPhone"
+          name="communicationPhone"
+          value={formData.communicationAddress.communicationPhone}
+          onChange={(e) => handleInputChange(e, "communicationAddress")}
+        />
+
+        <label htmlFor="communicationMobile">Mobile No.:</label>
+        <input
+          type="tel"
+          id="communicationMobile"
+          name="communicationMobile"
+          value={formData.communicationAddress.communicationMobile}
+          onChange={(e) => handleInputChange(e, "communicationAddress")}
+        />
+
+        <label htmlFor="communicationBusStation">Nearest Bus Station:</label>
+        <input
+          type="text"
+          id="communicationBusStation"
+          name="communicationBusStation"
+          value={formData.communicationAddress.communicationBusStation}
+          onChange={(e) => handleInputChange(e, "communicationAddress")}
+        />
+
+        <label htmlFor="communicationRailwayStation">
+          Nearest Railway Station:
+        </label>
+        <input
+          type="text"
+          id="communicationRailwayStation"
+          name="communicationRailwayStation"
+          value={formData.communicationAddress.communicationRailwayStation}
+          onChange={(e) => handleInputChange(e, "communicationAddress")}
+        />
+
+        <button
+          className="small-button"
+          onClick={handleSameAsCommunicationAddress}
+        >
+          Same as Communication Address
+        </button>
+
+        <h3>Permanent Address</h3>
+        <label htmlFor="permanentPincode">Pincode:</label>
+        <input
+          type="text"
+          id="permanentPincode"
+          name="permanentPincode"
+          value={formData.permanentAddress.permanentPincode}
+          onChange={(e) => handleInputChange(e, "permanentAddress")}
+        />
+
+        <label htmlFor="permanentCity">City:</label>
+        <input
+          type="text"
+          id="permanentCity"
+          name="permanentCity"
+          value={formData.permanentAddress.permanentCity}
+          readOnly
+        />
+
+        <label htmlFor="permanentStreetAddress">Street Address:</label>
+        <input
+          type="text"
+          id="permanentStreetAddress"
+          name="permanentStreetAddress"
+          value={formData.permanentAddress.permanentStreetAddress}
+          onChange={(e) => handleInputChange(e, "permanentAddress")}
+        />
+
+        <label htmlFor="permanentState">State:</label>
+        <input
+          type="text"
+          id="permanentState"
+          name="permanentState"
+          value={formData.permanentAddress.permanentState}
+          readOnly
+        />
+
+        <label htmlFor="permanentCountry">Country:</label>
+        <input
+          type="text"
+          id="permanentCountry"
+          name="permanentCountry"
+          value={formData.permanentAddress.permanentCountry}
+          readOnly
+        />
+
+        <label htmlFor="permanentPhone">Phone No. (Land line):</label>
+        <input
+          type="tel"
+          id="permanentPhone"
+          name="permanentPhone"
+          value={formData.permanentAddress.permanentPhone}
+          onChange={(e) => handleInputChange(e, "permanentAddress")}
+        />
+
+        <label htmlFor="permanentMobile">Mobile No.:</label>
+        <input
+          type="tel"
+          id="permanentMobile"
+          name="permanentMobile"
+          value={formData.permanentAddress.permanentMobile}
+          onChange={(e) => handleInputChange(e, "permanentAddress")}
+        />
+
+        <label htmlFor="permanentBusStation">Nearest Bus Station:</label>
+        <input
+          type="text"
+          id="permanentBusStation"
+          name="permanentBusStation"
+          value={formData.permanentAddress.permanentBusStation}
+          onChange={(e) => handleInputChange(e, "permanentAddress")}
+        />
+
+        <label htmlFor="permanentRailwayStation">
+          Nearest Railway Station:
+        </label>
+        <input
+          type="text"
+          id="permanentRailwayStation"
+          name="permanentRailwayStation"
+          value={formData.permanentAddress.permanentRailwayStation}
+          onChange={(e) => handleInputChange(e, "permanentAddress")}
+        />
+      </div>
 
       <h3>Demand Draft Details</h3>
       {formData.ddDetails.map((ddDetail, index) => (
@@ -453,8 +726,18 @@ const AdmissionForm = () => {
 
       <Sign />
 
-      {/* <DocumentVerification /> */}
-      <Declaration />
+      <label>
+        <input
+          type="checkbox"
+          name="fullNameEnglish"
+          value={formData.declaration}
+          onChange={handleChange}
+          required
+        />
+        I hereby declare that the information given above is true to the best of
+        my knowledge.
+      </label>
+
       <button type="submit">Submit</button>
     </form>
   )
