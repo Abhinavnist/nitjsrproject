@@ -9,6 +9,8 @@ import cors from "cors"
 import morgan from "morgan"
 import connect from "./database/conn.js"
 import router from "./router/route.js"
+import bodyParser from "body-parser"
+
 const app = express()
 
 // middlewares
@@ -17,6 +19,17 @@ app.use(express.json())
 app.use(cors())
 app.use(morgan("tiny"))
 app.disable("x-powered-by")
+// Increase the maximum payload size
+app.use(bodyParser.json({ limit: "50mb" }))
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+)
+// app.use(bodyParser.json({ limit: "10mb" }))
+// app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }))
 
 const port = 8080
 

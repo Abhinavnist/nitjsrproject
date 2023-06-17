@@ -11,6 +11,7 @@ router.route("/registerMail").post(registerMail) //send the email
 router.route("/authenticate").post((req, res) => res.end()) //authenticate user
 router.route("/login").post(controller.verifyUser, controller.login) //login in app
 router.route("/admissionform").post(controller.submitAdmissionForm)
+router.route("/photo").post(controller.photo)
 
 // get method
 router.route("/user/:username").get(controller.getUser) //user with username

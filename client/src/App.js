@@ -9,6 +9,7 @@ import Profile from "./components/Profile"
 import Recovery from "./components/Recovery"
 import Reset from "./components/Reset"
 import PageNotFound from "./components/PageNotFound"
+import Photo from "./components/Upload"
 
 /** auth middleware */
 import { AuthorizeUser, ProtectRoute } from "./middleware/auth"
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/DPF-01",
     element: <AdmissionForm></AdmissionForm>,
+  },
+  {
+    path: "/photo",
+    element: <Photo></Photo>,
   },
   {
     path: "*",

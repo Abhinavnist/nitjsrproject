@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import ENV from "../config.js"
 import otpGenerator from "otp-generator"
 import AdmissionForm from "../model/Admission.model.js"
+import Photo from "../model/photo.model.js"
 
 // middleware fir verify user
 export async function verifyUser(req, res, next) {
@@ -303,5 +304,28 @@ export async function submitAdmissionForm(req, res) {
   } catch (error) {
     console.error("Failed to save admission form:", error)
     res.status(500).json({ error: "Failed to save admission form" })
+  }
+}
+
+export async function photo(req, res) {
+  try {
+    const { photo, signature } = req.body
+
+    // Create a new instance of the Photo model
+    const newPhoto = new Photo({
+      photo,
+      signature,
+    })
+
+    // Save the new photo document to the database
+    const savedPhoto = await newPhoto.save()
+
+    res.status(200).json(savedPhoto)
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to save photo",
+      success: false,
+      message: "Internal server error",
+    })
   }
 }

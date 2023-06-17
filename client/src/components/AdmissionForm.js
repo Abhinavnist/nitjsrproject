@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
 import "./AdmissionForm.css"
-import Sign from "./sign"
 import Nitjsr from "../assets/logo.png"
 const AdmissionForm = () => {
   const [formData, setFormData] = useState({
@@ -723,8 +722,6 @@ const AdmissionForm = () => {
           )}
         </div>
       ))}
-
-      <Sign />
 
       <label>
         <input
