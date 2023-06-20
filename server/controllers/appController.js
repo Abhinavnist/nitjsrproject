@@ -307,7 +307,7 @@ export async function submitAdmissionForm(req, res) {
   }
 }
 
-export async function photo(req, res) {
+export async function upload(req, res) {
   try {
     const { photo, signature } = req.body
 

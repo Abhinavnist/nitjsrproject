@@ -100,6 +100,7 @@ function Upload() {
                   name="photo"
                   onChange={(event) => handlePhotoUpload(event, setFieldValue)}
                   className="hidden"
+                  accept=".jpeg, .png, .jpg"
                 />
                 <label
                   htmlFor="photo"
@@ -136,6 +137,7 @@ function Upload() {
                   type="file"
                   id="signature"
                   name="signature"
+                  accept=".jpeg, .png, .jpg"
                   onChange={(event) =>
                     handleSignatureUpload(event, setFieldValue)
                   }

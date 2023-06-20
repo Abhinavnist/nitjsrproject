@@ -54,7 +54,7 @@ const router = createBrowserRouter([
     element: <AdmissionForm></AdmissionForm>,
   },
   {
-    path: "/photo",
+    path: "/upload",
     element: <Photo></Photo>,
   },
   {
